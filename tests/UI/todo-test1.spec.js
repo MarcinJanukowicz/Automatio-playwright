@@ -61,3 +61,32 @@ test('SCENARIO: User should be able to add a new todo', async ({ page }) => {
     });
   
   });
+
+
+  test('SCENARIO: User should be able to check how many task left to do on the items counter', async ({ page }) => {
+
+    await test.step('GIVEN: User has opened the todomvc todos page', async () => {
+  
+    await page.goto('https://todomvc.com/examples/react/dist/');
+  
+    });
+  
+    await test.step('WHEN: User types two new todo and submits it.', async () => {
+      
+      await page.getByTestId('text-input').fill('buy milk');
+      await page.getByTestId('text-input').press('Enter');
+      await page.getByTestId('text-input').fill('buy tea');
+      await page.getByTestId('text-input').press('Enter');
+  
+  
+    });
+  
+    await test.step('THEN: User should see "2 items left!" on the items counter', async () => {
+      
+
+    const itemCount = await page.locator('.todo-count').textContent();
+    expect(itemCount).toBe('2 items left!');
+  
+    });
+  
+  });
